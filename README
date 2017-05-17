@@ -1,0 +1,111 @@
+CANONICA 1.0
+Transformation of multi-loop Feynman integrals to a canonical basis
+
+Copyright (C) 2017 Christoph Meyer
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+To contact the author, please write to 
+    christoph.meyer@physik.hu-berlin.de
+
+For the latest version, please check the github repository
+    https://github.com/christophmeyer/CANONICA
+
+*********************************************************************************
+1. INSTALLATION
+*********************************************************************************
+
+CANONICA does not require any installation, the package can be loaded in a
+Mathematica session with the command
+
+	 Get["./CANONICA.m"]
+
+provided the file CANONICA.m resides in the current working directory. All 
+functionality is contained in this file, there are no dependencies other than 
+Mathematica itself. The package has been tested on a Linux operating system
+with the Mathematica versions 10 and 11, but should run on other operating
+systems, which are supported by Mathematica, as well.
+
+*********************************************************************************
+2. DOCUMENTATION
+*********************************************************************************
+
+The documentation consists of several parts, which are described in the
+following.
+
+An interactive manual can be found in the ./manual.nb notebook, which explains
+all relevant data structures as well as the usage and options of all functions
+provided by CANONICA. In particular, this notebook also describes the usage of
+some supplemental functionality. It is highly recommended to work trough this 
+notebook as it displays all of the available functionality.
+
+In addition to the manual, a number of examples can be found in the ./examples
+directory. In the directories of the examples a notebook file can be found that
+provides a quick illustration of how the main functionality of CANONICA can be
+used to transform differential equations into canonical form. 
+
+For a quick overview over the arguments and the output of a particular function
+in CANONICA, the command
+
+    ?FunctionName
+
+will call a short usage message if CANONICA is loaded in the current Mathematica
+session. This applies to options of functions and to global variables as well.
+
+The publication accompanying this release contains some of the content of the
+manual as well as a list of the available functions. An overview over the 
+algorithm implemented in CANONICA is given as well in this publication. For a 
+detailed description of the algorithm, the reader is referred to the original 
+publication arXiv:1611.01087.
+
+*********************************************************************************
+3. FILES IN THE PACKAGE
+*********************************************************************************
+
+./scr/CANONICA.m
+
+	Contains all of the source code of the program. In particular all
+	function definitions usage messages for the public functions and 
+	their options.
+
+./manual.nb
+
+	An interactive manual in the Mathematica notebook format that explains 
+	all functions and options with short examples.
+
+./examples
+
+	Several examples are provided in this directory. The directory of each
+	example contains a .m file with the differential equation and a .nb 
+	notebook file that illustrates the application of CANONICA to this
+	example. There is also a RunExample.m script in the directory of each
+	example that allows to run the calculation of the full transformation in
+	terminal mode by calling
+
+	math -run "<<RunExample.m"
+
+	or
+
+	math -script RunExample.m
+	
+	Some additional information about the examples is provided in
+	the ./examples/examples.pdf file. 
+
+./LICENSE
+
+	A copy of the third version of the GNU General Public License.
+
+./README
+
+	This file.
