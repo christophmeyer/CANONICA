@@ -1,0 +1,65 @@
+(* :Title: TransformOffDiagonalBlock.test										*)
+
+(*
+	This software is covered by the GNU General Public License 3.
+	Copyright (C) 2017-2020 Christoph Meyer
+	Copyright (C) 2019-2020 Vladyslav Shtabovenko
+*)
+
+(* :Summary:  Framework independent unit tests for TransformOffDiagonalBlock	*)
+
+(* ------------------------------------------------------------------------ *)
+
+Tests`OffDiagonalBlocks`TransformOffDiagonalBlock = 
+{
+  {"TransformOffDiagonalBlock-ID1", 
+   "TransformOffDiagonalBlock[{x}, {{1, 1}, {2, 2}, {3, 3}, {4, 4}, \
+{5, 5}, {6, 6}, {7, 8}}, 
+    {{(2 - 13*eps + 27*eps^2 - 16*eps^3)/(-2 + 13*eps - 27*eps^2 + \
+18*eps^3), 0, 0, 0, 0, 0, 0, 0}, {0, (2*eps^3)/((-1 + 2*eps)*(2 - \
+9*eps + 9*eps^2)), 0, 0, 0, 0, 0, 0}, 
+     {(2*eps^3*x)/(-2 + 13*eps - 27*eps^2 + 18*eps^3), 0, \
+(2*eps^3*x)/(-2 + 13*eps - 27*eps^2 + 18*eps^3), 0, 0, 0, 0, 0}, {0, \
+0, 0, (2*eps^2)/(1 - 5*eps + 6*eps^2), 0, 0, 0, 0}, 
+     {0, 0, 0, 0, -(eps/(x - 2*eps*x)), 0, 0, 0}, {0, 0, 0, 0, 0, (1 \
++ x)^(-1), 0, 0}, {0, 0, 0, 0, 0, 0, x^(-2), 0}, {0, 0, 0, 0, 0, 0, \
+0, x^(-2)}}, 
+    {{{(-2*eps)/x, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, \
+{0, 0, (-2*eps)/x, 0, 0, 0, 0, 0}, {0, 0, 0, (-2*eps)/x, 0, 0, 0, 0}, \
+
+      {0, (2*eps)/(1 + x), 0, (2*eps)/(1 + x), -(eps/(x + x^2)), 0, \
+0, 0}, {(-2*eps)/x, (2*eps)/x, (-2*eps)/x, 0, 0, (-2*eps)/(x + x^2), \
+0, 0}, 
+      {(eps^3*(140 - 38*x) - 2*(2 + x) + 17*eps*(2 + x) - eps^2*(106 \
++ 29*x) + eps^4*(-64 + 76*x))/(eps*(2 - 9*eps + 9*eps^2)*x*(1 + x)), \
+(18*eps)/(1 + x), (12*eps)/(1 + x), 
+       (15*eps)/(1 + x), (12*eps)/(1 + x), (-18*eps)/(1 + x), \
+-((2*eps + 3*eps*x)/(x + x^2)), eps/(1 + x)}, 
+      {(2*(-2 + 17*eps + eps^3*(124 - 54*x) + eps^2*(-65 + 12*x) + \
+eps^4*(-86 + 54*x)))/(eps*(2 - 9*eps + 9*eps^2)*x*(1 + x)), \
+(12*eps)/(1 + x), (12*eps*(-1 + x))/(x*(1 + x)), 
+       (6*eps + 12*eps*x)/(x + x^2), (12*eps)/(1 + x), (-12*eps)/(1 + \
+x), (2*eps)/(x + x^2), (-2*eps)/(x + x^2)}}}, DDeltaDenominatorDegree \
+-> 0, DDeltaNumeratorDegree -> 0, 
+    VerbosityLevel -> 0]", 
+   "{{{(2 - 13*eps + 27*eps^2 - 16*eps^3)/(-2 + 13*eps - 27*eps^2 + \
+18*eps^3), 0, 0, 0, 0, 0, 0, 0}, {0, (2*eps^3)/((-1 + 2*eps)*(2 - \
+9*eps + 9*eps^2)), 0, 0, 0, 0, 0, 0}, {(2*eps^3*x)/(-2 + 13*eps - \
+27*eps^2 + 18*eps^3), 0, (2*eps^3*x)/(-2 + 13*eps - 27*eps^2 + \
+18*eps^3), 0, 0, 0, 0, 0}, {0, 0, 0, (2*eps^2)/(1 - 5*eps + 6*eps^2), \
+0, 0, 0, 0}, {0, 0, 0, 0, -(eps/(x - 2*eps*x)), 0, 0, 0}, {0, 0, 0, \
+0, 0, (1 + x)^(-1), 0, 0}, {0, 0, 0, 0, 0, 0, x^(-2), 0}, {0, 0, 0, \
+0, 0, 0, 0, x^(-2)}}, {{{(-2*eps)/x, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, \
+0, 0, 0, 0, 0}, {0, 0, (-2*eps)/x, 0, 0, 0, 0, 0}, {0, 0, 0, \
+(-2*eps)/x, 0, 0, 0, 0}, {0, (2*eps)/(1 + x), 0, (2*eps)/(1 + x), \
+-(eps/(x + x^2)), 0, 0, 0}, {(-2*eps)/x, (2*eps)/x, (-2*eps)/x, 0, 0, \
+(-2*eps)/(x + x^2), 0, 0}, {(eps^3*(140 - 38*x) - 2*(2 + x) + \
+17*eps*(2 + x) - eps^2*(106 + 29*x) + eps^4*(-64 + 76*x))/(eps*(2 - \
+9*eps + 9*eps^2)*x*(1 + x)), (18*eps)/(1 + x), (12*eps)/(1 + x), \
+(15*eps)/(1 + x), (12*eps)/(1 + x), (-18*eps)/(1 + x), -((2*eps + \
+3*eps*x)/(x + x^2)), eps/(1 + x)}, {(2*(-2 + 17*eps + eps^3*(124 - \
+54*x) + eps^2*(-65 + 12*x) + eps^4*(-86 + 54*x)))/(eps*(2 - 9*eps + \
+9*eps^2)*x*(1 + x)), (12*eps)/(1 + x), (12*eps*(-1 + x))/(x*(1 + x)), \
+(6*eps + 12*eps*x)/(x + x^2), (12*eps)/(1 + x), (-12*eps)/(1 + x), \
+(2*eps)/(x + x^2), (-2*eps)/(x + x^2)}}}}"}
+ };
