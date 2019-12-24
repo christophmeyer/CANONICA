@@ -30,7 +30,7 @@ Print["CANONICA 1.0"];
 Print["Author: Christoph Meyer"];
 
 
-(*         Usage messages of global variables and protected symbols            *)
+(*	Usage messages of global variables and protected symbols	*)
 
 
 $ComputeParallel::usage =
@@ -53,7 +53,7 @@ eps::usage =
 Protect[eps];
 
 
-(*                   Usage messages of public functions                       *)
+(*	Usage messages of public functions	*)
 
 
 CalculateDlogForm::usage =
@@ -331,7 +331,7 @@ off-diagonal blocks are controlled by the option \
 \!\(\*StyleBox[\"DDeltaNumeratorDegree\", \"TI\"]\).";
 
 
-(*           Usage messages of public options of public functions              *)
+(*	Usage messages of public options of public functions	*)
 
 
 AllowEpsDependence::usage =
@@ -593,6 +593,8 @@ AppendTo[Options[TransformOffDiagonalBlock],
 
 CalcAnsatzD::nintnum =
 "DDeltaNumeratorDegree needs to be a non-negative integer.";
+
+
 CalcAnsatzD::nintden =
 "DDeltaDenominatorDegree needs to be a non-negative integer.";
 
@@ -604,10 +606,20 @@ present in the differential equation.";
 
 CalculateNexta::mismatch1 =
 "trafoPrevious and aPrevious must have the same dimension.";
+
+
 CalculateNexta::mismatch2 =
 "Size of trafoPrevious must correspond to a full sector.";
-CalculateNexta::mismatch3 = "Next sector exceeds size of aFull.";
-CalculateNexta::nonerem = "There is no further sector left.";
+
+
+CalculateNexta::mismatch3 =
+"Next sector exceeds size of aFull.";
+
+
+CalculateNexta::nonerem =
+"There is no further sector left.";
+
+
 CalculateNexta::notsquare =
 "trafoPrevious has to be a square matrix.";
 
@@ -619,6 +631,8 @@ CalculateNextSubsectorD::nosol =
 CheckAlphabet::notinv =
 "List of invariants does not contain all variables present in the \
 alphabet.";
+
+
 CheckAlphabet::notpoly =
 "Alphabet must contain polynomials in the invariants.";
 
@@ -629,30 +643,45 @@ CheckBoundariesConsistency::falsebounds =
 
 CheckDE::notsquare =
 "Differential equation contains non-square matrices.";
+
+
 CheckDE::diffdims =
 "Differential equation is not in the right format.";
+
+
 CheckDE::fewvars =
 "Differential equation contains invariants that are not specified \
 in the invariants argument.";
+
+
 CheckDE::varnumber =
 "Length of differential equation list does not match the number of \
 invariants.";
+
+
 CheckDE::nonull = "Differential equation contains Null elements.";
 
 
-ExtractDiagonalBlock::badbounds = "Invalid boundaries.";
+ExtractDiagonalBlock::badbounds =
+"Invalid boundaries.";
 
 
 FindAnsatzT::nintnum =
 "TDeltaNumeratorDegree needs to be a non-negative integer.";
+
+
 FindAnsatzT::nintden =
 "TDeltaDenominatorDegree needs to be a non-negative integer.";
+
+
 FindAnsatzT::ndlogtr =
 "Tr[a] is not in dlog-form, epsilon form does not exist.";
 
 
 FindConstantNormalization::baddims =
 "Dimensions of trafoPrevious and aPrevious do not match.";
+
+
 FindConstantNormalization::ndlog =
 "aPrevious is not in epsilon-form.";
 
@@ -663,20 +692,30 @@ FindD::invansatz =
 
 NextEquationD::baddims1 =
 "Size of differential equation does not match a sector boundary.";
+
+
 NextEquationD::baddims2 =
 "Length of previousD does not match the size of the diagonal block.";
+
+
 NextEquationD::baddims3 =
 "Dimensions of previousD do not match a sector boundary.";
 
 
 RecursivelyTransformSectors::badrange =
 "Invalid range, nSecStart must be smaller or equal to nSecStop.";
+
+
 RecursivelyTransformSectors::badbounds1 =
 "Invalid boundaries, sectorBoundaries must contain at least \
 nSecStop entries.";
+
+
 RecursivelyTransformSectors::badbounds2 =
 "Invalid boundaries, size of highest sector in range exceeds size \
 of aFull.";
+
+
 RecursivelyTransformSectors::baddims =
 "Dimensions of trafoPrevious or aPrevious are inconsistent with \
 nSecStart.";
@@ -686,7 +725,9 @@ SectorBoundariesFromID::noorder =
 "List of master integrals is not ordered by sector-id.";
 
 
-TransformDE::notinv = "Tranformation is not invertible.";
+TransformDE::notinv =
+"Tranformation is not invertible.";
+
 TransformDE::mismatch =
 "Dimensions of differential equation and transformation do not \
 match.";
@@ -695,12 +736,18 @@ match.";
 TransformDiagonalBlock::noepsform =
 "Canonical form does not exist, since Tr[a] is not of the necessary \
 form.";
+
+
 TransformDiagonalBlock::nonrationaltr =
 "Algorithm not applicable: rational transformation does not \
 exist.";
+
+
 TransformDiagonalBlock::nonrational =
 "Differential equation is not rational in the invariants and the \
 regulator.";
+
+
 TransformDiagonalBlock::invansatz = "Provided ansatz is not rational \
 in the invariants.";
 
@@ -711,16 +758,22 @@ TransformDlogToEpsForm::notdlog =
 
 TransformOffDiagonalBlock::baddims1 =
 "Dimensions of trafoPrevious and aPrevious do not match.";
+
+
 TransformOffDiagonalBlock::baddims2 =
 "Length of aPrevious does not correspond to a sector boundary.";
+
+
 TransformOffDiagonalBlock::baddims3 =
 "Length of userProvidedD does not match the size of the diagonal \
 block.";
+
+
 TransformOffDiagonalBlock::baddims4 =
 "Dimensions of userProvidedD do not match a sector boundary.";
 
 
-(*                             Function definitions                            *)
+(*	Function definitions	*)
 
 
 AlgebraicallyIndepQ[polyList_List, invariants_List,
