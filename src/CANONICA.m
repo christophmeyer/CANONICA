@@ -422,54 +422,81 @@ option: \!\(\*StyleBox[\"CalculateNextSubsectorD\", \"TI\"]\), \
 \!\(\*StyleBox[\"TransformOffDiagonalBlock\", \"TI\"]\).";
 
 
-(*                     Public options of public functions                      *)
+(*	Public options of public functions	*)
 
 
-Options[CalculateNextSubsectorD] = {DDeltaNumeratorDegree -> 0,
-VerbosityLevel -> 10};
+Options[CalculateNextSubsectorD] = {
+	DDeltaNumeratorDegree	-> 0,
+	VerbosityLevel 			-> 10
+};
+
+Options[ExtractIrreducibles] = {
+	AllowEpsDependence -> False
+};
+
+Options[FindAnsatzT] = {
+	TDeltaDenominatorDegree -> 0,
+	TDeltaNumeratorDegree	-> 0
+};
 
 
-Options[ExtractIrreducibles] = {AllowEpsDependence -> False};
+Options[FindAnsatzSubsectorD] = {
+	DDeltaNumeratorDegree -> 0
+};
 
 
-Options[FindAnsatzT] = {TDeltaDenominatorDegree -> 0,
-TDeltaNumeratorDegree -> 0};
+Options[FindConstantNormalization] = {
+	VerbosityLevel -> 10
+};
 
 
-Options[FindAnsatzSubsectorD] = {DDeltaNumeratorDegree -> 0};
+Options[RecursivelyTransformSectors] = {
+	DDeltaNumeratorDegree		-> 0,
+	TDeltaDenominatorDegree		-> 0,
+	TDeltaNumeratorDegree 		-> 0,
+	FinalConstantNormalization	-> False,
+	VerbosityLevel				-> 10
+};
 
 
-Options[FindConstantNormalization] = {VerbosityLevel -> 10};
+Options[TransformDE] = {
+	SimplifyResult -> True
+};
 
 
-Options[RecursivelyTransformSectors] = {DDeltaNumeratorDegree -> 0,
-TDeltaDenominatorDegree -> 0, TDeltaNumeratorDegree -> 0,
-FinalConstantNormalization -> False, VerbosityLevel -> 10};
+Options[TransformDiagonalBlock] = {
+	PreRescale 				-> True,
+	TDeltaDenominatorDegree	-> 0,
+	TDeltaNumeratorDegree	-> 0,
+	VerbosityLevel			-> 10
+};
 
 
-Options[TransformDE] = {SimplifyResult -> True};
+Options[TransformDlogToEpsForm] = {
+	EnforceBlockTriangular	-> True,
+	VerbosityLevel			-> 10
+};
 
 
-Options[TransformDiagonalBlock] = {PreRescale -> True,
-TDeltaDenominatorDegree -> 0, TDeltaNumeratorDegree -> 0,
-VerbosityLevel -> 10};
+Options[TransformNextDiagonalBlock] = {
+	TDeltaDenominatorDegree	-> 0,
+	TDeltaNumeratorDegree	-> 0,
+	VerbosityLevel			-> 10
+};
 
 
-Options[TransformDlogToEpsForm] = {EnforceBlockTriangular -> True,
-VerbosityLevel -> 10};
+Options[TransformNextSector] = {
+	DDeltaNumeratorDegree	-> 0,
+	TDeltaDenominatorDegree	-> 0,
+	TDeltaNumeratorDegree	-> 0,
+	VerbosityLevel			-> 10
+};
 
 
-Options[TransformNextDiagonalBlock] = {TDeltaDenominatorDegree -> 0,
-TDeltaNumeratorDegree -> 0, VerbosityLevel -> 10};
-
-
-Options[TransformNextSector] = {DDeltaNumeratorDegree -> 0,
-TDeltaDenominatorDegree -> 0, TDeltaNumeratorDegree -> 0,
-VerbosityLevel -> 10};
-
-
-Options[TransformOffDiagonalBlock] = {DDeltaNumeratorDegree -> 0,
-VerbosityLevel -> 10};
+Options[TransformOffDiagonalBlock] = {
+	DDeltaNumeratorDegree	-> 0,
+	VerbosityLevel			-> 10
+};
 
 
 Begin["`Private`"]
@@ -478,66 +505,90 @@ Begin["`Private`"]
 $RandomSeed = 42;
 
 
-(*                      Options of private functions                           *)
+(*	Options of private functions	*)
 
 
-Options[AlgebraicallyIndepQ] = {ShowAnnihilatingPoly -> False};
+Options[AlgebraicallyIndepQ] = {
+	ShowAnnihilatingPoly -> False
+};
 
 
-Options[BreakToIndepSummands] = {Form -> Raw};
+Options[BreakToIndepSummands] = {
+	Form -> Raw
+};
 
 
-Options[CalcAnsatzD] = {DDeltaDenominatorDegree -> 0,
-DDeltaNumeratorDegree -> 0};
+Options[CalcAnsatzD] = {
+	DDeltaDenominatorDegree -> 0,
+	DDeltaNumeratorDegree -> 0
+};
 
 
-Options[CalcNegPowerPossibilities] = {DDeltaDenominatorDegree->0};
+Options[CalcNegPowerPossibilities] = {
+	DDeltaDenominatorDegree->0
+};
 
 
-Options[CalcNextDn] = {VerbosityLevel -> 10};
+Options[CalcNextDn] = {
+	VerbosityLevel -> 10
+};
 
 
-Options[CalcNextTn] = {VerbosityLevel -> 10};
+Options[CalcNextTn] = {
+	VerbosityLevel -> 10
+};
 
 
-Options[CheckDE] = {EnforceSquare -> True};
+Options[CheckDE] = {
+	EnforceSquare -> True
+};
 
 
-Options[DenominatorFactors] = {ShowPowersAndPrefactor -> False};
+Options[DenominatorFactors] = {
+	ShowPowersAndPrefactor -> False
+};
 
 
-Options[ExprPropLetterQ] = {ShowLetter -> False};
+Options[ExprPropLetterQ] = {
+	ShowLetter -> False
+};
 
 
-Options[FindD] = {DDeltaDenominatorDegree -> 0,
-DDeltaNumeratorDegree -> 0, VerbosityLevel -> 10};
+Options[FindD] = {
+	DDeltaDenominatorDegree	-> 0,
+	DDeltaNumeratorDegree	-> 0,
+	VerbosityLevel 			-> 10
+};
 
 
 (* Undocumented options of public functions *)
 
-
 AppendTo[Options[CalculateNextSubsectorD],
-DDeltaDenominatorDegree -> 0];
+	DDeltaDenominatorDegree -> 0];
 
 
-Options[CheckIntegrability] = {ShowRelations -> False};
+Options[CheckIntegrability] = {
+	ShowRelations -> False
+};
 
 
-AppendTo[Options[FindAnsatzSubsectorD], DDeltaDenominatorDegree -> 0];
+AppendTo[Options[FindAnsatzSubsectorD],
+	DDeltaDenominatorDegree -> 0];
 
 
 AppendTo[Options[RecursivelyTransformSectors],
-DDeltaDenominatorDegree -> 0];
+	DDeltaDenominatorDegree -> 0];
 
 
-AppendTo[Options[TransformNextSector], DDeltaDenominatorDegree -> 0];
+AppendTo[Options[TransformNextSector],
+	DDeltaDenominatorDegree -> 0];
 
 
 AppendTo[Options[TransformOffDiagonalBlock],
-DDeltaDenominatorDegree -> 0];
+	DDeltaDenominatorDegree -> 0];
 
 
-(*                                Messages                                     *)
+(*	Messages	*)
 
 
 CalcAnsatzD::nintnum =
