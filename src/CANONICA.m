@@ -827,7 +827,7 @@ preferredTerms_, OptionsPattern[]] :=
 
 CalcAnsatzD[e_List, c_List, b_List, invariants_List,
 OptionsPattern[]] :=
-	Module[ {alphabet, bhat, negPowersb, negPowerFactors,
+	Module[ {alphabet, bhat, negPowerFactors,
 		posPowerFactors, extAlphabet, dDeltaDenominatorDegreeVal,
 		dfacInit, eDlog, cDlog, dfacInitLetters, combinedFactors},
 
@@ -903,7 +903,7 @@ OptionsPattern[]] :=
 	];
 
 
-CalcbhatAndFactors[b_List, alphabet_List, invariants_List] :=
+CalcbhatAndFactors[b_List, (*alphabet*)_List, invariants_List] :=
 	Module[ {occuringSpuriousFactors, hbar, epsDepFactors,
 		occuringOverallFactors, overallFactor, khat, bhat},
 
@@ -1072,7 +1072,7 @@ CalcInverseStep[{sectorBoundaries_List, prevSecInverse_List, prevSecTrafo_List}]
 	];
 
 
-CalcNegPowerPossibilities[alphabet_List, invariants_List, occuringLetters_List] :=
+CalcNegPowerPossibilities[alphabet_List, (*invariants*)_List, occuringLetters_List] :=
 	Module[ {},
 		Return[DeleteCases[(Times @@ # &) /@
 			Function[powList, (alphabet[[#[[1]]]]^#[[2]] &) /@ powList] /@
@@ -1087,7 +1087,7 @@ CalcNegPowerPossibilities[alphabet_List, invariants_List, occuringLetters_List] 
 
 
 CalcNextDn[e_List, c_List, bhat_List, hbar_, khat_, nmin_Integer, alphabet_List, invariants_List,
-	indepFactors_List, {previousDs_List, previousSolution_List, previousFactorSolutions_List}, OptionsPattern[]] :=
+	indepFactors_List, {previousDs_List, previousSolution_List, (*previousFactorSolutions*)_List}, OptionsPattern[]] :=
 	Module[ {nOrder, ansatzD, lMax, kMax, khatMax, equationSet, vars, linearSystem, preSol, solRule,
 			newPreviousSolution, newPreviousDs, nextDsVanishResult, maxEqnOrder, gVanishQ, bprimehatVanishQ,
 			stopSol, preCompleteSoln, freeVarsToZero, freeVarsZeroSol, completeSoln},
@@ -1197,7 +1197,7 @@ CalcNextDn[e_List, c_List, bhat_List, hbar_, khat_, nmin_Integer, alphabet_List,
 
 CalcNextTn[aHat_List, f_, alphabet_List, invariants_List, lMIN_Integer, lMAX_Integer,
 	kMAX_Integer, kMIN_Integer,	nonSingularPoint_List, indepFactors_List,
-	{previousTs_List, previousSolution_List, previousNonlinears_List, tZeroQ_}, OptionsPattern[]] :=
+	{previousTs_List, previousSolution_List, previousNonlinears_List, (*tZeroQ*)_}, OptionsPattern[]] :=
 	Module[ {nOrder, tAnsatz, tVector, deqAtNOrder, equationSet, parameterEquations,
 			linearPartSolved, solveResult, newTs, newSols, res},
 
@@ -1281,7 +1281,7 @@ CalcNextTn[aHat_List, f_, alphabet_List, invariants_List, lMIN_Integer, lMAX_Int
 
 			If[ Length[newTs] >= (Max[kMAX - kMIN, lMAX - lMIN + 1] + 1) && Or @@ Table[
 				Length[Union[newTs[[-Max[kMAX - kMIN, lMAX - lMIN + 1] - 1 - del ;; Length[newTs] - del]] /.
-					\[Beta][a_, b_, c_,d_] :> \[Beta][b, c, d]]] === 1, {del, 0, Length[newTs] - Max[kMAX - kMIN, lMAX - lMIN + 1] - 1}],
+					\[Beta][_, b_, c_,d_] :> \[Beta][b, c, d]]] === 1, {del, 0, Length[newTs] - Max[kMAX - kMIN, lMAX - lMIN + 1] - 1}],
 
 				If[ OptionValue[VerbosityLevel] >= 2,
 					Print["Infinite loop encountered. Try different Ansatz."]
@@ -1429,7 +1429,7 @@ CalculateNexta[aFull_List, invariants_List, sectorBoundaries_List, trafoPrevious
 
 
 CalculateNextSubsectorD[a_List, invariants_List, sectorBoundaries_List, previousD_List, userProvidedAnsatz_List: {}, OptionsPattern[]] :=
-	Module[ {nextEquation, irredFactors, nLowerSector, e, newb, c, b, subSector, alphabet, newCurrentD, nextSectorD},
+	Module[ {nextEquation, irredFactors, nLowerSector, e, c, b, subSector, alphabet, newCurrentD, nextSectorD},
 
 		nextEquation = NextEquationD[a, invariants, sectorBoundaries, previousD];
 
@@ -1658,8 +1658,8 @@ CheckNextDsVanish[newPreviousDs_List, newPreviousSolution_List, bhat_List, lMax_
 	];
 
 
-CheckNextTsVanish[aHat_List, f_, alphabet_List, invariants_List, lMIN_Integer, lMAX_Integer, kMAX_Integer,
-	kMIN_Integer, nonSingularPoint_List, indepFactors_List, previousTs_List, previousSolution_List, previousNonlinears_List, delta_Integer] :=
+CheckNextTsVanish[aHat_List, f_, alphabet_List, invariants_List, lMIN_Integer, lMAX_Integer, (*kMAX*)_Integer,
+	(*kMIN*)_Integer, nonSingularPoint_List, indepFactors_List, previousTs_List, previousSolution_List, previousNonlinears_List, delta_Integer] :=
 	Module[ {tVector, deAtNextDeltaOrders, equationSet, nParameterEquations, nlinearPartSolved, preTrafo, simplifiedPreTrafo,
 		preSol, polishedSol, remSol, freeVarsZero, fullSol, cmatrix, coeffList, constTrafo},
 		tVector =
@@ -2034,7 +2034,7 @@ ExtractIrreducibles[a_List, OptionsPattern[]] :=
 	];
 
 
-FindAndApplyRelations[alphabet_List, invariants_List, expr_, preferredTerms_List] :=
+FindAndApplyRelations[alphabet_List, (*invariants*)_List, expr_, preferredTerms_List] :=
 	Module[ {occuringPreferredTerms, nonOccuringPreferredTerms, extExpr,
 		terms, positionsPreferredterms, coefficients, toLCDFactor,
 		termsLCD, monomialLists, gatheredMonomialLists, solution, a,
@@ -2204,7 +2204,7 @@ FindAnsatzT[a_List, invariants_List, OptionsPattern[]] :=
 
 
 FindConstantNormalization[invariants_List, trafoPrevious_List, aPrevious_List, OptionsPattern[]] :=
-	Module[ {alphabet, dlogForm, consttrafo, freeConsts, fixedPoint, trafo},
+	Module[ {alphabet, dlogForm, trafo},
 
 		alphabet = ExtractIrreducibles[aPrevious];
 		If[ Length[trafoPrevious] =!= Length[aPrevious[[1]]],
@@ -3116,7 +3116,7 @@ SplitNumerator[group_List, alphabet_List, invariants_List] :=
 
 			denFactors = Select[group[[1, 2]], #[[2]] < 0 &];
 			allReductions =
-				Map[PolynomialReduce[num, denFactors /. Fac[NLetter_, pow_] :> alphabet[[NLetter]], #] &,
+				Map[PolynomialReduce[num, denFactors /. Fac[NLetter_, (*pow*)_] :> alphabet[[NLetter]], #] &,
 				Permutations[invariants]] /. backSubstitutionRules;
 
 			remainderLessReductions = Select[allReductions, #[[2]] === 0 &];
