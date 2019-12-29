@@ -1528,8 +1528,10 @@ CheckNextTsVanish[aHat_List, f_, alphabet_List, invariants_List,
    simplifiedPreTrafo = 
     Simplify[
      preTrafo /. nonSingularPoint /. eps -> Prime[Power[10, 4]]];
+   Off[Solve::svars];
    preSol = 
     Solve[simplifiedPreTrafo == IdentityMatrix[Length[preTrafo]]];
+   On[Solve::svars];
    If[preSol === {}, Return[False];];
    If[Length[Select[Variables[preTrafo], Head[#] === \[Beta] &]] === 
      Power[Length[preTrafo], 2], 
