@@ -1528,8 +1528,10 @@ CheckNextTsVanish[aHat_List, f_, alphabet_List, invariants_List,
    simplifiedPreTrafo = 
     Simplify[
      preTrafo /. nonSingularPoint /. eps -> Prime[Power[10, 4]]];
+   Off[Solve::svars];
    preSol = 
     Solve[simplifiedPreTrafo == IdentityMatrix[Length[preTrafo]]];
+   On[Solve::svars];
    If[preSol === {}, Return[False];];
    If[Length[Select[Variables[preTrafo], Head[#] === \[Beta] &]] === 
      Power[Length[preTrafo], 2], 
@@ -1794,10 +1796,17 @@ EpsDependentNormalizationStep[{invariants_List, trafoPrevious_List,
           3], #[[1]] &], #1[[1, 1]] < #2[[1, 1]] &]]]];
    vars = Select[Variables[powMatrix], #[[2]] =!= 1 &];
    Off[NMinimize::cvmit];
-   If[vars === {}, sol = {1, {}};, 
-    sol = NMinimize[
-      overallFactor + numeratorContribution /. c[_, 1] -> 0, vars, 
-      Integers, MaxIterations -> 200]];
+   If[vars === {}, sol = {1, {}};,    
+      
+    (* Mathematica 12 slightly changed the syntax for NMinimze, so account for that here *)  
+	If[ $VersionNumber >= 12,
+		sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, Element[vars, Integers],
+		MaxIterations -> 200],
+		sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, vars,
+		Integers, MaxIterations -> 200]	
+	];
+	];
+      
    On[NMinimize::cvmit];
    If[sol[[
        1]] - (overallFactor + numeratorContribution /. _c -> 
@@ -3054,6 +3063,7 @@ TransformDiagonalBlock[a_List, invariants_List,
       Position[
         Map[Function[Letter, NumberQ@Simplify[DenFactor/Letter]], 
          alphabet], True][[1, 1]]], denominatorFactors];
+   Off[Solve::svars];
    traceContraints = 
     Join[Solve[
        DeleteCases[
@@ -3067,6 +3077,7 @@ TransformDiagonalBlock[a_List, invariants_List,
             Length[aNormed[[1]]]}], {j, 1, Length[aNormed[[1]]]}] &) /@
         Complement[Table[i, {i, 1, Length[alphabet]}], 
         denominatorLetterNumbers]]];
+   On[Solve::svars];
    res = NestWhile[
      Function[PreviousResult, 
       CalcNextTn[aHat, f, alphabet, invariants, lMIN, lMAX, kMAX, 
