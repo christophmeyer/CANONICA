@@ -1,4 +1,4 @@
-(* :Title: DiagonalBlocks.mt														*)
+(* :Title: DiagonalBlocks.mt												*)
 
 (*
 	This software is covered by the GNU General Public License 3.
@@ -6,7 +6,7 @@
 	Copyright (C) 2019-2020 Vladyslav Shtabovenko
 *)
 
-(* :Summary:  Unit tests for DiagonalBlocks functions								*)
+(* :Summary:  Unit tests for DiagonalBlocks functions						*)
 
 (* ------------------------------------------------------------------------ *)
 
@@ -28,6 +28,9 @@ If[	$OnlySubTest=!="",
 stingCompare[a_,b_]:=
 	(ToString[a]===ToString[b]);
 
+expCompare[a_,b_]:=
+	MatchQ[Union[Flatten[{Together[a - b]}]], {0}];
+
 stingCompareIgnore[_,_]:=
 	True;
 
@@ -40,7 +43,19 @@ If[ Names["Tests`DiagonalBlocks`*CheckAbort"]=!={},
 
 nms=Names["Tests`DiagonalBlocks`*"];
 If[ nms=!={} && Select[nms, !StringMatchQ[#, "*CheckAbort"] &]=!={},
-	tmpTest = Map[test[ToExpression[(#[[2]])],ToExpression[(#[[3]])],testID->#[[1]]]&,
+	tmpTest = Map[test[expCompare[ToExpression[(#[[2]])],ToExpression[(#[[3]])]],True,testID->#[[1]]]&,
 	Join@@(ToExpression/@Select[nms, !StringMatchQ[#, "*CheckAbort"] &])];
 	tmpTest = tmpTest /. testID->TestID /. test -> Test
 ];
+
+
+
+
+
+
+
+
+
+
+
+

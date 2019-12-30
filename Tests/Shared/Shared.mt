@@ -31,6 +31,9 @@ stingCompare[a_,b_]:=
 stingCompareIgnore[_,_]:=
 	True;
 
+expCompare[a_,b_]:=
+	MatchQ[Union[Flatten[{Together[a - b]}]], {0}]
+
 If[ Names["Tests`Shared`*CheckAbort"]=!={},
 	tmpTest = Map[test[ToExpression[(#[[2]])],ToExpression[(#[[3]])],(#[[4]]),testID->#[[1]],
 		MessagesEquivalenceFunction->stingCompareIgnore]&,
@@ -40,7 +43,7 @@ If[ Names["Tests`Shared`*CheckAbort"]=!={},
 
 nms=Names["Tests`Shared`*"];
 If[ nms=!={} && Select[nms, !StringMatchQ[#, "*CheckAbort"] &]=!={},
-	tmpTest = Map[test[ToExpression[(#[[2]])],ToExpression[(#[[3]])],testID->#[[1]]]&,
+	tmpTest = Map[test[expCompare[ToExpression[(#[[2]])],ToExpression[(#[[3]])]],True,testID->#[[1]]]&,
 	Join@@(ToExpression/@Select[nms, !StringMatchQ[#, "*CheckAbort"] &])];
 	tmpTest = tmpTest /. testID->TestID /. test -> Test
 ];
