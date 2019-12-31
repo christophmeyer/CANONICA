@@ -1,0 +1,23 @@
+(* :Title: CalculateNextSubsectorD.test										*)
+
+(*
+	This software is covered by the GNU General Public License 3.
+	Copyright (C) 2017-2020 Christoph Meyer
+	Copyright (C) 2019-2020 Vladyslav Shtabovenko
+*)
+
+(* :Summary:  Framework independent unit tests for CalculateNextSubsectorD	*)
+
+(* ------------------------------------------------------------------------ *)
+
+Tests`OffDiagonalBlocks`CalculateNextSubsectorD = 
+{
+  {"CalculateNextSubsectorD-ID1", 
+   "CalculateNextSubsectorD[{{{-(eps/x), 0}, {(-1 + eps)/(-1 + x)^2, \
+(-2*eps)/(-1 + x)}}, {{0, 0}, {0, 0}}}, {x, y}, {{1, 1}, {2, 2}, {3, \
+3}, {4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}, {10, 10}, {11, \
+11}, {12, 12}, {13, 13}, {14, 15}, {16, 16}, {17, 18}, {19, 20}, 
+     {21, 21}, {22, 23}, {24, 25}}, {{}}, DDeltaDenominatorDegree -> \
+0, DDeltaNumeratorDegree -> 0, VerbosityLevel -> 0]", 
+   "{{((-1 + eps)*(-1/2 - (-1 + x)^(-1)))/(1 - 2*eps)}}"}
+ };
