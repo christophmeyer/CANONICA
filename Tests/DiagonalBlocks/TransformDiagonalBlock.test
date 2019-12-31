@@ -1,0 +1,40 @@
+(* :Title: TransformDiagonalBlock.test										*)
+
+(*
+	This software is covered by the GNU General Public License 3.
+	Copyright (C) 2017-2020 Christoph Meyer
+	Copyright (C) 2019-2020 Vladyslav Shtabovenko
+*)
+
+(* :Summary:  Framework independent unit tests for TransformDiagonalBlock	*)
+
+(* ------------------------------------------------------------------------ *)
+
+Tests`DiagonalBlocks`TransformDiagonalBlock =
+{
+{"TransformDiagonalBlock-ID1",
+"tmp = TransformDiagonalBlock[{{{(-2*eps)/x,0,0,0},{0,0,0,0},{0,0,(1-2*\
+eps)/x,0},{0,0,0,(-2*eps)/x}}},{x},VerbosityLevel\[Rule]0]; \n
+res = Together[
+CANONICA`Private`CalcInverse[tmp[[1]]].{{1, 0, 0, 0}, {0, 1, 0, 0},
+{0, 0, x, 0}, {0, 0, 0, 1}}];
+(Variables[res]==={} && MatrixQ[res])",
+"True"},
+{"TransformDiagonalBlock-ID2",
+"tmp = TransformDiagonalBlock[{{{(x*(-1+x+y-z)-eps*(x+9*x^2+4*y^2+y*(4+\
+13*x-8*z)-13*x*z+4*(-1+z)*z))/(2*x*(x+x^2+y^2+y*(1+2*x-2*z)-2*x*z+(-1+\
+z)*z)),((-1+3*eps)*y)/(2*x*(x+x^2+y^2+y*(1+2*x-2*z)-2*x*z+(-1+z)*z))},\
+{-((-1+eps)*x*(1+x+y-z))/(2*y*(x+y-z)),(3*x-5*eps*x+(2-4*eps)*y-2*z+4*\
+eps*z)/(2*x*(x+y-z))}},{{(-((1+eps)*y^2)+y*(eps*(7+3*x-3*z)-3*(1+x-z))\
++2*(-1+2*eps)*(x+x^2-2*x*z+(-1+z)*z))/(2*y*(x+x^2+y^2+y*(1+2*x-2*z)-2*\
+x*z+(-1+z)*z)),((-1+3*eps)*y)/(2*x*(x+x^2+y^2+y*(1+2*x-2*z)-2*x*z+(-1+\
+z)*z))},{-((-1+eps)*x*(1+x+y-z))/(2*y*(x+y-z)),((-1+eps)*(4*x+3*y-4*z)\
+)/(2*y*(x+y-z))}},{{(1-x-y+eps*(-3+5*x+5*y-5*z)+z)/(2*(x+x^2+y^2+y*(1+\
+2*x-2*z)-2*x*z+(-1+z)*z)),(y-3*eps*y)/(2*x*(x+x^2+y^2+y*(1+2*x-2*z)-2*\
+x*z+(-1+z)*z))},{((-1+eps)*x*(1+x+y-z))/(2*y*(x+y-z)),(-1+eps)/(2*(x+\
+y-z))}}},{x,y,z},VerbosityLevel\[Rule]0]; \n res = Together[
+CANONICA`Private`CalcInverse[tmp[[1]]].{{(-1 + 3*eps)/y, 0},
+{-((x*(-1 + 8*eps + x + y - z))/ y^2), -((eps*x*(1 + x + y - z))/y^2)}}];
+(Variables[res]==={} && MatrixQ[res])",
+"True"}
+};
