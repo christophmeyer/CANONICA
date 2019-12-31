@@ -25,10 +25,10 @@ If[	$OnlySubTest=!="",
 	Remove[testNames]
 ];
 
-stingCompare[a_,b_]:=
+stringCompare[a_,b_]:=
 	(ToString[a]===ToString[b]);
 
-stingCompareIgnore[_,_]:=
+stringCompareIgnore[_,_]:=
 	True;
 
 expCompare[a_,b_]:=
@@ -36,7 +36,7 @@ expCompare[a_,b_]:=
 
 If[ Names["Tests`OffDiagonalBlocks`*CheckAbort"]=!={},
 	tmpTest = Map[test[ToExpression[(#[[2]])],ToExpression[(#[[3]])],(#[[4]]),testID->#[[1]],
-		MessagesEquivalenceFunction->stingCompareIgnore]&,
+		MessagesEquivalenceFunction->stringCompareIgnore]&,
 		Join@@(ToExpression/@Names["Tests`OffDiagonalBlocks`*CheckAbort"])];
 	tmpTest = tmpTest /. testID->TestID /. test -> Test
 ];

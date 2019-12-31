@@ -25,18 +25,18 @@ If[	$OnlySubTest=!="",
 	Remove[testNames]
 ];
 
-stingCompare[a_,b_]:=
+stringCompare[a_,b_]:=
 	(ToString[a]===ToString[b]);
 
 expCompare[a_,b_]:=
 	MatchQ[Union[Flatten[{Together[a - b]}]], {0}];
 
-stingCompareIgnore[_,_]:=
+stringCompareIgnore[_,_]:=
 	True;
 
 If[ Names["Tests`Private`*CheckAbort"]=!={},
 	tmpTest = Map[test[ToExpression[(#[[2]])],ToExpression[(#[[3]])],(#[[4]]),testID->#[[1]],
-		MessagesEquivalenceFunction->stingCompareIgnore]&,
+		MessagesEquivalenceFunction->stringCompareIgnore]&,
 		Join@@(ToExpression/@Names["Tests`Private`*CheckAbort"])];
 	tmpTest = tmpTest /. testID->TestID /. test -> Test
 ];
