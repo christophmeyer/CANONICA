@@ -1907,63 +1907,66 @@ EpsDependentNormalizationStep[{invariants_List, trafoPrevious_List,
 				Select[FactorList[
 				expr], ! FreeQ[#1, eps] && !IndependentOfInvariantsQ[#1, invariants] && #[[2]] >
 			0 &], eps]], aPrevious, {3}];
-trafoPowers =
-	Table[Table[
-	MapIndexed[{#2[[1]], c[#2[[1]], j] - c[#2[[1]], i]} &,
-	factors], {j, 1, Length@aPrevious[[1]]}], {i, 1,
-	Length@aPrevious[[1]]}];
-powMatrix =
-	ReplacePart[
-	Table[MapThread[
-	Map[Function[
-		flist, {flist[[1, 1]],
-		Total[Map[Function[x, x[[2]]], flist]]}],
-		GatherBy[Join[#1, #2], First]] &, {currentPowers[[nVar]],
-		trafoPowers}, 2], {nVar, 1, Length@invariants}],
-	Map[# -> Table[{i, 0}, {i, 1, Length@factors}] &,
-	Position[Map[PossibleZeroQ, aPrevious, {3}], True]]];
-ordersList = Exponent[#, eps] & /@ factors;
-numeratorContribution =
-	Max[Flatten[
-	MapThread[
-	Function[{powMatrixComponent, offsetComponent},
-		offsetComponent +
-		Total[Map[
-		Function[pows,
-			ordersList[[pows[[1]]]]*StepFunction[pows[[2]]]],
-		powMatrixComponent]]], {powMatrix, offsetMatrix}, 3], 2]];
-overallFactor =
-	Total[
-	MapIndexed[ordersList[[#2[[1]]]]*# &,
-	Map[Function[
-		flist, -Min[
-		Map[Function[fac, -StepFunction[-fac[[2]]]], flist]]],
-	Sort[GatherBy[
-		Flatten[powMatrix,
-		3], #[[1]] &], #1[[1, 1]] < #2[[1, 1]] &]]]];
-vars = Select[Variables[powMatrix], #[[2]] =!= 1 &];
-Off[NMinimize::cvmit];
-If[vars === {}, sol = {1, {}};,
+		trafoPowers =
+			Table[Table[
+			MapIndexed[{#2[[1]], c[#2[[1]], j] - c[#2[[1]], i]} &,
+			factors], {j, 1, Length@aPrevious[[1]]}], {i, 1,
+			Length@aPrevious[[1]]}];
+		powMatrix =
+			ReplacePart[
+			Table[MapThread[
+			Map[Function[
+				flist, {flist[[1, 1]],
+				Total[Map[Function[x, x[[2]]], flist]]}],
+				GatherBy[Join[#1, #2], First]] &, {currentPowers[[nVar]],
+				trafoPowers}, 2], {nVar, 1, Length@invariants}],
+			Map[# -> Table[{i, 0}, {i, 1, Length@factors}] &,
+			Position[Map[PossibleZeroQ, aPrevious, {3}], True]]];
+		ordersList = Exponent[#, eps] & /@ factors;
+		numeratorContribution =
+			Max[Flatten[
+			MapThread[
+			Function[{powMatrixComponent, offsetComponent},
+				offsetComponent +
+				Total[Map[
+				Function[pows,
+					ordersList[[pows[[1]]]]*StepFunction[pows[[2]]]],
+				powMatrixComponent]]], {powMatrix, offsetMatrix}, 3], 2]];
+		overallFactor =
+			Total[
+			MapIndexed[ordersList[[#2[[1]]]]*# &,
+			Map[Function[
+				flist, -Min[
+				Map[Function[fac, -StepFunction[-fac[[2]]]], flist]]],
+			Sort[GatherBy[
+				Flatten[powMatrix,
+				3], #[[1]] &], #1[[1, 1]] < #2[[1, 1]] &]]]];
+		vars = Select[Variables[powMatrix], #[[2]] =!= 1 &];
+		Off[NMinimize::cvmit];
+		If[ vars === {},
+			sol = {1, {}};,
 
 	(* Mathematica 12 slightly changed the syntax for NMinimze, so account for that here *)
-	If[ $VersionNumber >= 12,
-		sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, Element[vars, Integers],
-		MaxIterations -> 200],
-		sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, vars,
-		Integers, MaxIterations -> 200]
+			If[ $VersionNumber >= 12,
+				sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, Element[vars, Integers],
+				MaxIterations -> 200],
+				sol = NMinimize[overallFactor + numeratorContribution /. c[_, 1] -> 0, vars,
+				Integers, MaxIterations -> 200]
+			];
+		];
+		On[NMinimize::cvmit];
+		If[ sol[[
+			1]] - (overallFactor + numeratorContribution /. _c ->
+				0) > -0.2,
+			trafo = IdentityMatrix[Length@aPrevious[[1]]],
+			trafo = DiagonalMatrix[
+				Table[Times @@
+				MapIndexed[Power[#, c[#2[[1]], i]] &, factors], {i, 1,
+				Length@aPrevious[[1]]}]] /. sol[[2]] /. _c -> 0
+		];
+		Return[{invariants, trafoPrevious.trafo,
+			TransformDE[aPrevious, invariants, trafo]}];
 	];
-	];
-
-On[NMinimize::cvmit];
-If[sol[[
-	1]] - (overallFactor + numeratorContribution /. _c ->
-		0) > -0.2, trafo = IdentityMatrix[Length@aPrevious[[1]]],
-	trafo = DiagonalMatrix[
-		Table[Times @@
-		MapIndexed[Power[#, c[#2[[1]], i]] &, factors], {i, 1,
-		Length@aPrevious[[1]]}]] /. sol[[2]] /. _c -> 0];
-Return[{invariants, trafoPrevious.trafo,
-	TransformDE[aPrevious, invariants, trafo]}];];
 
 
 ExprPropLetterQ[expr_, invariants_List, alphabet_List,
