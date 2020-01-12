@@ -798,8 +798,7 @@ CalcbhatAndFactors[b_List, alphabet_List, invariants_List] :=
 		occuringSpuriousFactors =
 			Union[Flatten[
 			Function[liste,
-				Select[liste, #[[2]] < 0 && !
-					FreeQ[#[[1]] && #[[1]] =!= eps, eps] &]] /@
+				Select[liste, #[[2]] < 0 && !FreeQ[#[[1]] && #[[1]] =!= eps, eps] &]] /@
 			FactorList /@ Flatten[b], 1],
 			SameTest -> (NumberQ[
 				Simplify[#1[[1]]/#2[[1]]]] && #1[[2]] == #2[[2]] &)];
@@ -812,21 +811,18 @@ CalcbhatAndFactors[b_List, alphabet_List, invariants_List] :=
 				]} &) /@
 			Function[factor,
 				Sort[Select[
-					Select[occuringSpuriousFactors, !
-					IndependentOfInvariantsQ[#[[1]], invariants] &],
+					Select[occuringSpuriousFactors, !IndependentOfInvariantsQ[#[[1]], invariants] &],
 					NumberQ[
 					Simplify[#1[[1]]/
 						factor]] &], #1[[2]] > #2[[2]] &][[-1]]] /@
 				Union[(#1[[1]] &) /@
-				Select[occuringSpuriousFactors, !
-					IndependentOfInvariantsQ[#[[1]], invariants] &],
+				Select[occuringSpuriousFactors, !IndependentOfInvariantsQ[#[[1]], invariants] &],
 				SameTest -> (NumberQ[Simplify[#1[[1]]/#2[[1]]]] &)], {1}];
 		epsDepFactors =
 			Function[term,
 			Select[FactorList[
 				term], #[[2]] > 0 &&
-				IndependentOfInvariantsQ[#[[1]], invariants] && !
-				NumberQ[#[[1]]] &]] /@ DeleteCases[Flatten[b], 0];
+				IndependentOfInvariantsQ[#[[1]], invariants] && !NumberQ[#[[1]]] &]] /@ DeleteCases[Flatten[b], 0];
 		occuringOverallFactors =
 			Function[liste, Sort[liste, #2[[2]] > #1[[2]] &]] /@
 			GatherBy[
@@ -1223,8 +1219,7 @@ delta_Integer] :=
 				delta} &) /@ ({ExprPropLetterQ[#[[1]], invariants, alphabet,
 					ShowLetter -> True][[3]], -#1[[2]]} &) /@
 			Select[FactorList[
-				Denominator[expr]], !
-				IndependentOfInvariantsQ[#[[1]],
+				Denominator[expr]], !IndependentOfInvariantsQ[#[[1]],
 				invariants] &], #[[2]] <= -1 &]];
 	];
 
@@ -1770,11 +1765,10 @@ DenominatorFactors[expr_, invariants_List, OptionsPattern[]] :=
 		If[ OptionValue[ShowPowersAndPrefactor],
 			Return[{Select[factors,
 			IndependentOfInvariantsQ[#, invariants] &],
-			Select[factors, ! IndependentOfInvariantsQ[#, invariants] &]}],
+			Select[factors, !IndependentOfInvariantsQ[#, invariants] &]}],
 			Return[
 			Map[#[[1]] &,
-			Select[factors, !
-				IndependentOfInvariantsQ[#, invariants] &]]];
+			Select[factors, !IndependentOfInvariantsQ[#, invariants] &]]];
 		];
 	];
 
@@ -1911,9 +1905,7 @@ EpsDependentNormalizationStep[{invariants_List, trafoPrevious_List,
 			Times @@
 				Power @@@
 				Select[FactorList[
-				expr], ! FreeQ[#1, eps] && !
-
-		IndependentOfInvariantsQ[#1, invariants] && #[[2]] >
+				expr], ! FreeQ[#1, eps] && !IndependentOfInvariantsQ[#1, invariants] && #[[2]] >
 			0 &], eps]], aPrevious, {3}];
 trafoPowers =
 	Table[Table[
@@ -2027,8 +2019,7 @@ ExtractIrreducibles[a_List, OptionsPattern[]] :=
 		Return[Union[
 			Select[Union[(#1[[1]] &) /@
 				Flatten[FactorList /@
-				Union[Flatten[Denominator[Together[a]]]], 1]], !
-				NumberQ[#1] &&
+				Union[Flatten[Denominator[Together[a]]]], 1]], !NumberQ[#1] &&
 				If[ OptionValue[AllowEpsDependence] =!= True,
 					FreeQ[#1, eps],
 					Variables[#1] =!= {eps}
@@ -2651,8 +2642,7 @@ RatFunctionZeroCoeffs[rawEquation_, invariants_List] :=
 			Complement[preDenNumList, epsDepDens]];
 		occuringFactors =
 			Union[Select[
-			Union[Flatten[FactorList[#[[2]]] & /@ denNumList]], !
-				NumberQ[#] &], SameTest -> (NumberQ@Simplify[#1/#2] &)];
+			Union[Flatten[FactorList[#[[2]]] & /@ denNumList]], !NumberQ[#] &], SameTest -> (NumberQ@Simplify[#1/#2] &)];
 		factorFormList = ({#[[1]],
 				ToFactorForm[#[[2]], occuringFactors, invariants]} &) /@
 			denNumList;
