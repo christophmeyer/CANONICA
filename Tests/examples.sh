@@ -28,7 +28,7 @@ for exFile in 'RunExample.m'
 do
   echo
   echo -e "* \c"
-  $MATH -nopromt -script ../examples/DrellYanOneMass/$exFile
+  $MATH -nopromt -script ../examples/DrellYanOneMass/$exFile -run extraArgs=\"$2\"
 done
 
 ##K4Integral
