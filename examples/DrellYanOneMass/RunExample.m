@@ -9,49 +9,20 @@
 
 
 If[$FrontEnd===Null,
-	exDirectory=DirectoryName[$InputFileName];
-	verbosity=4;
-	colorPrint=Function[(WriteString["stdout","\033[1m"<>#1<>"\033[0m "<> If[TrueQ[#4],
-		"\033[1m \033[32m"<>#2<>"\033[0m \033[0;39m","\033[1m \033[31m"<>#3<>"\033[0m \033[0;39m"]<>"\n"];
-		If[!TrueQ[#4],Quit[1]])],	
-	exDirectory=NotebookDirectory[];
-	verbosity=10;
-	colorPrint=Function[Print[Style[#1,"Text",Bold], " ", 
-		If[TrueQ[#4],Style[#2,"Text",Darker[Green],Bold],Style[#3,"Text",Red,Bold]]]];
+	exDirectory=DirectoryName[$InputFileName],
+	exDirectory=NotebookDirectory[]
 ];
-parseExtraArguments[]:=If[StringQ[extraArgs] && extraArgs=!="",
-	If[ToExpression[extraArgs]===$Failed,
-		Print["Cannot parse extra arguments, evaluation aborted!"];	
-		If[$FrontEnd===Null,
-			Quit[1],
-			Abort
-		]
-	]
-];
-
-caDirectory=ParentDirectory@ParentDirectory@exDirectory;
-caPath = FileNameJoin[{caDirectory,"src","CANONICA.m"}];
+Get[FileNameJoin[{Nest[ParentDirectory,exDirectory,2],"Tests","RunExampleProlog.m"}]]
 
 
-Block[{Print=quiet},Get[caPath]];
-description="Drell-Yan with one internal mass";
+description="Drell-Yan with one internal mass. Time estimate: 1 min";
 Get[FileNameJoin[{exDirectory,"DrellYanOneMassDEQ.m"}]];
-
-
-If[!MatchQ[aFull,{_?MatrixQ..}],
-	Print["Cannot load the matrix aFull, evaluation aborted!"];
-	If[$FrontEnd===Null,
-		Quit[1],
-		Abort
-	]
-];
+checkMatrix[aFull];
+Print[description];
 
 
 (* ::Section:: *)
 (*Use CANONICA to find a canonical form*)
-
-
-Print[description];
 
 
 invariants = {x, y};
@@ -63,6 +34,7 @@ nParallelKernels=2;
 
 
 parseExtraArguments[];
+checkSkip[];
 
 
 $ComputeParallel=computeParallel;
