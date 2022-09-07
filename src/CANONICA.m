@@ -747,6 +747,12 @@ TransformDiagonalBlock::nonrational =
 "Differential equation is not rational in the invariants and the \
 regulator.";
 
+TransformDiagonalBlock::nonrationalinv =
+"Detected terms not rational in the invariants: `1`. This usually \
+implies that you need to find a suitable non-rational transformation \
+for the relevant invariants that will rationalize them. In the case of \
+square roots, the RationalizeRoots package (arXiv:1910.13251) by
+M. Besier, P. Wasser and S. Weinzierl could be helpful.";
 
 TransformDiagonalBlock::invansatz = "Provided ansatz is not rational \
 in the invariants.";
@@ -1744,13 +1750,17 @@ CheckNextTsVanish[aHat_List, f_, alphabet_List, invariants_List, lMIN_Integer, l
 
 
 CheckRationality[a_List, invariants_List] :=
-	Module[ {freeOfExpFunctionsQ, freeOfOtherHeads},
+	Module[ {freeOfExpFunctionsQ, freeOfOtherHeads, freeOfRationalPowersQ},
 		freeOfExpFunctionsQ =
 			Cases[a, Power[___, b_ /; ! IndependentOfInvariantsQ[b, Append[invariants, eps]]], Infinity] === {};
 
 		freeOfOtherHeads =
 			Complement[Union@Flatten[Reap[MapAll[Sow[Head[#]] &, a]]], {Integer, List, Plus, Power, Rational, Symbol, Times}] === {};
-		Return[freeOfExpFunctionsQ && freeOfOtherHeads];
+
+		freeOfRationalPowersQ =
+			Cases[a,Power[b_ /; !IndependentOfInvariantsQ[b, Append[invariants, eps]], _Rational],Infinity]==={};
+
+		Return[freeOfExpFunctionsQ && freeOfOtherHeads && freeOfRationalPowersQ];
 	];
 
 
@@ -1763,8 +1773,7 @@ CheckSectorBoundaries[a_List, sectorBoundaries_List] :=
 				Union[Flatten[
 					Function[matrix,
 					Function[bounds, (Take[matrix[[#1]], {bounds[[2]] + 1, Length[matrix]}] &) /@
-						Table[i, {i, bounds[[1]], bounds[[2]]}]] /@
-						Drop[Select[sectorBoundaries,
+						Table[i, {i, bounds[[1]], bounds[[2]]}]] /@ Drop[Select[sectorBoundaries,
 						FreeQ[#1, x_ /; x > size] &], -1]] /@ a]]];,
 			Return[False];
 		];
@@ -3319,6 +3328,11 @@ userProvidedAnsatz_List: {}, OptionsPattern[]] :=
 
 		If[ Length[aNormed[[1]]] === 1,
 			trafo = {{pureContribution*mixedContribution}};
+
+			If[ !CheckRationality[trafo, invariants],
+				Message[TransformDiagonalBlock::nonrationalinv, ToString[trafo,InputForm]];
+				Return[False];
+			];
 			Return[{trafo, TransformDE[aNormed, invariants, trafo]}];
 		];
 		If[ ! And @@
