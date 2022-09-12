@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* CANONICA 1.0                                                                *)
+(* CANONICA 1.0.1                                                              *)
 (* Transformation of multi-loop Feynman integrals to a canonical basis         *)
 (*                                                                             *)
 (* Copyright (C) 2017 Christoph Meyer                                          *)
@@ -19,14 +19,14 @@
 (*     along with this program.  If not, see <http://www.gnu.org/licenses/>.   *)
 (*                                                                             *)
 (* To contact the author, please write to                                      *)
-(*     christoph.meyer@physik.hu-berlin.de                                     *)
+(*     christophmeyer87@gmail.com                                              *)
 (*                                                                             *)
 (* For the latest version, please check the github repository                  *)
 (*     https://github.com/christophmeyer/CANONICA                              *)
 
 BeginPackage["CANONICA`"]
 
-Print["CANONICA 1.0"];
+Print["CANONICA 1.0.1"];
 Print["Author: Christoph Meyer"];
 
 
