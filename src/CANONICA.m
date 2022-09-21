@@ -2478,7 +2478,7 @@ MinimizePrimeFactors[ratList_List] :=
 				Total@Map[Abs[p + #[[1, 2]]] &,
 				Function[facTerm,
 					Select[facTerm, ! FreeQ[#, {primeFactor, _}] &]] /@
-					facIntList /. {} -> {{primeFactor, 0}}], p]}],
+					facIntList /. {} -> {{primeFactor, 0}}], p, Integers]}],
 			primeFactors];
 
 		minPowersTotal = Total[#[[2, 1]] & /@ minSolution];
