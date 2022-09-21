@@ -2454,14 +2454,7 @@ LinearSystemSolver[parameterEquations_List, vars_List, maxLength_Integer] :=
 
 
 LinearTest[expr_] :=
-	Return[If[ Sort[Function[monomial,
-			Total[Map[Function[term, term[[2]]],
-			Select[FactorList[monomial], ! NumberQ[#1[[1]]] &]]]] /@
-		MonomialList[expr]][[-1]] > 1,
-			False,
-			True
-		]];
-
+	Internal`LinearQ[expr, Variables[expr /. Equal -> List]];
 
 MinimizePrimeFactors[ratList_List] :=
 	Module[ {facIntList, nPowersTotal, primeFactors, minSolution,
