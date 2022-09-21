@@ -751,7 +751,7 @@ TransformDiagonalBlock::nonrationalinv =
 "Detected terms not rational in the invariants: `1`. This usually \
 implies that you need to find a suitable non-rational transformation \
 for the relevant invariants that will rationalize them. In the case of \
-square roots, the RationalizeRoots package (arXiv:1910.13251) by
+square roots, the RationalizeRoots package (arXiv:1910.13251) by \
 M. Besier, P. Wasser and S. Weinzierl could be helpful.";
 
 TransformDiagonalBlock::invansatz = "Provided ansatz is not rational \
