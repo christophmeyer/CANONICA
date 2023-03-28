@@ -1810,7 +1810,7 @@ DenominatorFactors[expr_, invariants_List, OptionsPattern[]] :=
 
 
 DissipateFactors[lettersBounds_List, eDlog_List, cDlog_List] :=
-	Module[ {eDlog0, cDlog0, lettersBoundsPlusOne, eStep0, eStep, cStep0, cStep},
+	Module[ {eDlog0, cDlog0, lettersBoundsPlusOne, eStep0, eStep, cStep0, cStep, mtRes},
 
 		eDlog0 = Map[If[ # =!= 0,
 						1,
@@ -1868,12 +1868,17 @@ DissipateFactors[lettersBounds_List, eDlog_List, cDlog_List] :=
 					1, Length[cDlog[[nLetter]]]}], 1], {0, 0}]], {j, 1,
 				Length[cDlog[[nLetter, 1]]]}], {i, 1,
 			Length[lettersBounds[[nLetter]]]}], {nLetter, 1, Length@cDlog}];
+
+		If[	{lettersBounds, eStep0, eStep, cStep}==={{},{},{},{}},
+			mtRes = {},
+			mtRes = MapThread[Union, {lettersBounds, eStep0, eStep, cStep},3]
+		];
+
 		Return[
 			Map[Function[list,
 			Map[Function[glist, Sort[glist, #1[[2]] < #2[[2]] &][[1]]],
 			GatherBy[list, #[[1]] &]]],
-			MapThread[Union, {lettersBounds, eStep0, eStep, cStep},
-			3], {3}]];
+			mtRes, {3}]];
 	];
 
 DistributedContextsSwitch[True] :=
